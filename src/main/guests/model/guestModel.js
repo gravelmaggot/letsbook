@@ -9,6 +9,7 @@ const guestSchema = new Schema({
   email: {
     type: String,
     required: [true, "A guest must have an e-mail address."],
+    unique: true,
   },
   birthday: {
     type: Date,
@@ -17,10 +18,7 @@ const guestSchema = new Schema({
   phoneNumber: {
     type: String,
     required: [true, "A guest must have a phone number."],
-  },
-  cpf: {
-    type: String,
-    required: [true, "A guest must have a CPF."],
+    unique: true,
   },
   city: {
     type: String,

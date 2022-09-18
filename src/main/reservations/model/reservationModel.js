@@ -9,6 +9,11 @@ const reservationSchema = new Schema({
     type: Number,
     required: [true, "A reservation must have a hotel room number."],
   },
+  guestId: {
+    type: Schema.Types.ObjectId,
+    ref: "Guest",
+    required: [true, "A reservation must be associated with a guest."],
+  },
   price: {
     type: Number,
     required: [true, "A reservation must have a price."],
@@ -36,7 +41,7 @@ const reservationSchema = new Schema({
       values: ["confirmed", "cancelled", "checkIn", "checkOut"],
       message: "Status must be one of: confirmed, cancelled, checkIn or checkOut.",
     },
-  },
+  }
 });
 
 export default model("Reservation", reservationSchema);

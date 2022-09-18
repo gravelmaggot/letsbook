@@ -1,4 +1,5 @@
 import AppError from "./appError.js";
+import { isCelebrateError } from "celebrate";
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
@@ -38,8 +39,6 @@ const sendProdError = (err, res) => {
   }
   // Unknown error, cannot leak to client
   else {
-    console.log("ERROR", err);
-
     res.status(500).json({
       status: "error",
       message: "Something went wrong",
@@ -51,23 +50,41 @@ export default function errorHandler(err, req, res, next) {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
+  if (isCelebrateError(err)) {
+    let errorMessage = null;
+    const bodyError = err.details.get("body");
+    const paramError = err.details.get("params");
+
+    if (bodyError) {
+      errorMessage = bodyError.details.map((error) => error.message);
+    } else {
+      errorMessage = paramError.details.map((error) => error.message);
+    }
+
+    return res.status(400).json({
+      status: "error",
+      message: errorMessage,
+    });
+  }
+
   if (process.env.NODE_ENV === "development") {
     sendDevError(err, res);
-  } else if (process.env.NODE_ENV === "production") {
-    let error = { ...err };
-
-    if (error.name === "CastError") {
-      error = handleCastErrorDB(error);
+  } else if (
+    process.env.NODE_ENV === "production" ||
+    process.env.NODE_ENV === "test"
+  ) {
+    if (err.name === "CastError") {
+      err = handleCastErrorDB(err);
     }
 
-    if (error.code === 11000) {
-      error = handleDuplicateFieldsDB(error);
+    if (err.code === 11000) {
+      err = handleDuplicateFieldsDB(err);
     }
 
-    if (error.name === "ValidationError") {
-      error = handleValidationErrorDB(error);
+    if (err.name === "ValidationError") {
+      err = handleValidationErrorDB(err);
     }
 
-    sendProdError(error, res);
+    sendProdError(err, res);
   }
 }

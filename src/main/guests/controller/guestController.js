@@ -4,15 +4,13 @@ import catchAsync from "../../../utils/catchAsync.js";
 import Guest from "../model/guestModel.js";
 import {
   createGuest,
-  findAllGuests,
-  findGuestByCpf,
   findGuestById,
   updateGuest,
   deleteGuestById,
 } from "../repo/guestRepo.js";
 
 export const getAll = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(findAllGuests(), req.query)
+  const features = new APIFeatures(Guest.find(), req.query)
     .filter()
     .sort()
     .limit()
@@ -31,6 +29,10 @@ export const getAll = catchAsync(async (req, res, next) => {
 export const getGuest = catchAsync(async (req, res, next) => {
   const guest = await findGuestById(req.params.id);
 
+  if(!guest) {
+    throw new AppError(`No guest could be found for id ${req.params.id}.`, 404);
+  }
+
   res.status(200).json({
     status: "Success",
     data: {
@@ -41,7 +43,6 @@ export const getGuest = catchAsync(async (req, res, next) => {
 
 export const createNewGuest = catchAsync(async (req, res, next) => {
   const newGuest = await createGuest(req.body);
-  console.log(newGuest);
 
   res.status(201).json({
     status: "Success",
@@ -52,8 +53,11 @@ export const createNewGuest = catchAsync(async (req, res, next) => {
 });
 
 export const updateExistingGuest = catchAsync(async (req, res, next) => {
-  checkGuestById(req.params.id);
   const updatedGuest = await updateGuest(req.params.id, req.body);
+
+  if (!updatedGuest) {
+    throw new AppError(`No guest could be found for id ${req.params.id}.`, 404);
+  }
 
   res.status(200).json({
     status: "Success",
@@ -64,11 +68,13 @@ export const updateExistingGuest = catchAsync(async (req, res, next) => {
 });
 
 export const deleteGuest = catchAsync(async (req, res, next) => {
-  checkGuestById(req.params.id);
-  await deleteGuestById(req.params.id);
+  const guest = await deleteGuestById(req.params.id);
+
+  if (!guest) {
+    return next(new AppError(`No guest could be found for id ${req.params.id}.`, 404));
+  }
 
   res.status(204).json({
     status: "Success",
-    data: null,
-  });
+  });;
 });
