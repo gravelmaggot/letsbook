@@ -17,6 +17,9 @@ npm install
 ## Configuração
 O projeto possui um arquivo .env.example, que serve de base para o setup de ambiente e banco de dados. Para que o banco rode como esperado sem alterações no código, seu valor no arquivo .env a ser criado deve ser no seguinte formato: mongodb://localhost:27017/<DB>
 
+## Requests
+O projeto possui um arquivo .json com uma collection do postman, contendo todos os endpoints da aplicação. Os endpoints que buscam todos os hóspedes e todas as reservas podem ser filtrados por campo(incluindo valores com modificadores [gte|gt|lte|lt]), limitados, paginados e ordenados.
+
 ### Produção
 Para rodar o ambiente de produção, basta rodar um dos comandos:
 
