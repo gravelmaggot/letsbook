@@ -24,16 +24,16 @@ O projeto possui um arquivo .json com uma collection do postman, contendo todos 
 Para rodar o ambiente de produção, basta rodar um dos comandos:
 
 ```sh
-yarn start:dev
-npm run start:dev
+yarn start:prod
+npm run start:prod
 ```
 
 ### Desenvolvimento
 Para rodar o ambiente de desenvolvimento, basta rodar um dos comandos:
 
 ```sh
-yarn start:prod
-npm run start:prod
+yarn start:dev
+npm run start:dev
 ```
 
 ### Testes
