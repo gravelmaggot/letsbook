@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import app from "./app.js";
 import mongoose from "mongoose";
+import swaggerUi from "swagger-ui-express"
 
 dotenv.config({ path: "./config.env" });
 

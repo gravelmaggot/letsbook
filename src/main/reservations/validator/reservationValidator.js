@@ -13,7 +13,7 @@ export const createValidator = celebrate({
   [Segments.BODY]: {
     hotelName: Joi.string().required(),
     room: Joi.number().required(),
-    guestId: Joi.string().custom(validateObjectId).message("blou").required(),
+    guestId: Joi.string().custom(validateObjectId).required(),
     price: Joi.number().required(),
     reservationDate: Joi.date().required(),
     accommodationDateBegin: Joi.date().required(),

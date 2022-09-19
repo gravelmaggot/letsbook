@@ -80,9 +80,7 @@ describe("Guests", () => {
   });
 
   it("should not be able to find guest by id", async () => {
-    const response = await request(app).get(
-      "/api/guests/6326923ba7b4a3d0f02beb49"
-    );
+    const response = await request(app).get("/api/guests/6326923ba7b4a3d0f02beb49");
 
     expect(response.status).toBe(404);
   });

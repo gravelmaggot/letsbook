@@ -1,0 +1,476 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Letsbook Docs",
+    "description": "API for managing hotel guests and reservations.",
+    "contact": {
+      "email": "kgrrost@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/guests": {
+      "get": {
+        "tags": ["Guest"],
+        "summary": "Finds All Guests",
+        "description": "Returns all guests, can be filtered by fields(including greater than, lesser than, greater than or equal to, lesser than or equal to), paged, limited, and sorted.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Guest"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Guest"],
+        "summary": "Create Guest",
+        "description": "Create new guest",
+        "requestBody": {
+          "description": "Update an existent pet in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Guest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Guest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Guest"],
+        "summary": "Update's an existing Guest",
+        "description": "Update Guest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Guest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Guest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      }
+    },
+    "/api/guests/{id}": {
+      "get": {
+        "tags": ["Guest"],
+        "summary": "Find User by Id",
+        "description": "Returns one guest by Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Guest's id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Guest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Guest"],
+        "summary": "Delete User by Id",
+        "description": "Deletes one guest by Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Guest's id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      }
+    },
+    "/api/reservations": {
+      "get": {
+        "tags": ["Reservations"],
+        "summary": "Finds All Reservations",
+        "description": "Returns all reservations, can be filtered by fields(including greater than, lesser than, greater than or equal to, lesser than or equal to), paged, limited, and sorted.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reservations"],
+        "summary": "Create user",
+        "description": "Creates new reservation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reservation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      }
+    },
+    "/api/reservations/{id}": {
+      "get": {
+        "tags": ["Reservations"],
+        "summary": "Find Reservation by Id",
+        "description": "Returns one reservation by Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reservation's id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Reservations"],
+        "summary": "Update existing reservation",
+        "description": "Updates reservation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reservation's id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Reservation"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reservations"],
+        "summary": "Delete Reservation by Id",
+        "description": "Deletes one reservation by Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reservation's id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      }
+    },
+    "/api/reservations/user/{id}": {
+      "get": {
+        "tags": ["Reservations"],
+        "summary": "Find Reservation by Guest's Id",
+        "description": "Returns one reservation by Guest Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reservation's id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Guest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Kiryu Kazuma"
+          },
+          "email": {
+            "type": "string",
+            "example": "judgmentkazzy@gmail.com"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "example": "1968-06-17T00:00:00.000Z"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": 54999327917
+          },
+          "city": {
+            "type": "string",
+            "example": "Gramado"
+          },
+          "state": {
+            "type": "string",
+            "example": "RS"
+          },
+          "country": {
+            "type": "string",
+            "example": "Brasil"
+          }
+        }
+      },
+      "Reservation": {
+        "type": "object",
+        "properties": {
+          "hotelName": {
+            "type": "string",
+            "example": "Serra Azul"
+          },
+          "room": {
+            "type": "number",
+            "example": 202
+          },
+          "userId": {
+            "type": "string",
+            "format": "ObjectId",
+            "example": "6326a3fe6e14f07cda5831e2"
+          },
+          "price": {
+            "type": "number",
+            "example": 500.25
+          },
+          "reservationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "1968-06-16T00:00:00.000Z"
+          },
+          "accommodationDateBegin": {
+            "type": "string",
+            "format": "date-time",
+            "example": "1968-06-17T00:00:00.000Z"
+          },
+          "accommodationDateEnd": {
+            "type": "string",
+            "format": "date-time",
+            "example": "1968-06-18T00:00:00.000Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "confirmed",
+            "enum": ["confirmed", "cancelled", "checkIn", "checkOut"]
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Guest": {
+        "description": "Guest object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Guest"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Guest"
+            }
+          }
+        }
+      }
+    }
+  }
+}

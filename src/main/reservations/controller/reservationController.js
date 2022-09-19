@@ -31,6 +31,11 @@ export const getAll = catchAsync(async (req, res, next) => {
 export const getReservation = catchAsync(async (req, res, next) => {
   const reservation = await findReservationById(req.params.id);
 
+  if(!reservation) {
+    throw new AppError(`No reservation could be found for id ${req.params.id}.`, 404);
+  }
+
+
   res.status(200).json({
     status: "Success",
     data: {
@@ -41,6 +46,10 @@ export const getReservation = catchAsync(async (req, res, next) => {
 
 export const getReservationByGuest = catchAsync(async (req, res, next) => {
   const reservation = await findByGuestId(req.params.id);
+
+  if(!reservation) {
+    throw new AppError(`No reservation could be found for id ${req.params.id}.`, 404);
+  }
 
   res.status(200).json({
     status: "Success",
@@ -91,10 +100,7 @@ export const updateExistingReservation = catchAsync(async (req, res, next) => {
   const updatedReservation = await updateReservation(req.params.id, req.body);
 
   if (!updatedReservation) {
-    throw new AppError(
-      `No reservation could be found for id ${req.params.id}.`,
-      404
-    );
+    throw new AppError(`No reservation could be found for id ${req.params.id}.`, 404);
   }
 
   res.status(200).json({
@@ -109,12 +115,7 @@ export const deleteReservation = catchAsync(async (req, res, next) => {
   const reservation = await deleteReservationById(req.params.id);
 
   if (!reservation) {
-    return next(
-      new AppError(
-        `No reservation could be found for id ${req.params.id}.`,
-        404
-      )
-    );
+    throw new AppError(`No reservation could be found for id ${req.params.id}.`, 404);
   }
 
   res.status(204).json({
